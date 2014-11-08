@@ -1,5 +1,5 @@
 TOPLEVEL=test
-VERILOG_FILES= factory.sv
+VERILOG_FILES= factory_pkg.sv test_program.sv 
 
 questa_gui: 
 	vlib work
@@ -11,7 +11,7 @@ questa_batch: ${VERILOG_FILES} clean
 	vlib work
 	vmap work work
 	vlog -mfcu -sv ${VERILOG_FILES}
-	vsim -c -novopt -coverage -do "run -all" ${TOPLEVEL}
+	vsim -c test -do "run -all" +TESTNAME=xyz
 
 clean:
 	@rm -rf work transcript vsim.wlf
