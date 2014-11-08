@@ -1,4 +1,5 @@
 import factory_pkg::*;
+import package_test::*;
 
 `include "TestGood.sv"
 `include "Test_v3.sv"
@@ -6,8 +7,10 @@ import factory_pkg::*;
  
 program test;
    initial begin
+      component c;
+      
       factory::printFactory();
-      factory::get_test();
+      c = factory::get_test();
    end
 endprogram // test
  

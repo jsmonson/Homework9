@@ -1,17 +1,23 @@
 TOPLEVEL=test
-VERILOG_FILES= factory_pkg.sv test_program.sv 
+VERILOG_FILES= factory_pkg.sv package_test.svh test_program.sv
 
-questa_gui: 
+.PHONY: TestGood
+TestGood: factory
+	vsim -c test -do "run -all" +TESTNAME=TestGood
+
+.PHONY: TestBad
+TestBad: factory
+	vsim -c test -do "run -all" +TESTNAME=TestBad
+
+.PHONY: Test_v3
+Test_v3: factory
+	vsim -c test -do "run -all" +TESTNAME=Test_v3
+
+.PHONY: factory
+factory: ${VERILOG_FILES} clean
 	vlib work
 	vmap work work
 	vlog -mfcu -sv ${VERILOG_FILES}
-	vsim -novopt -coverage -msgmode both -displaymsgmode both -do "view wave;do wave.do;run -all" ${TOPLEVEL}
-
-questa_batch: ${VERILOG_FILES} clean
-	vlib work
-	vmap work work
-	vlog -mfcu -sv ${VERILOG_FILES}
-	vsim -c test -do "run -all" +TESTNAME=xyz
 
 clean:
 	@rm -rf work transcript vsim.wlf

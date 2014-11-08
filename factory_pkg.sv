@@ -35,7 +35,7 @@ class factory;
       return test_component;
    endfunction // get_test
 
-   static function printFactory();
+   static function void printFactory();
       $display("Factory:");
       foreach (type_names[s]) $display("The name: %s maps to the class: %p", s, type_names[s]);
    endfunction // printFactory
@@ -70,20 +70,3 @@ class registry #(type T, string Tname) extends wrapper;
 endclass
 
 endpackage // factory_pkg
-
-/*   
-class MyTest1 extends component;
-   typedef registry #(MyTest1, "abc") type_id;
-endclass // MyTest1
-
-class MyTest2 extends component;
-   typedef registry #(MyTest2, "xyz") type_id;
-endclass // MyTest2
- 
-program test;
-   initial begin
-      factory::printFactory();
-      factory::get_test();
-   end
-endprogram // test
-*/ 
