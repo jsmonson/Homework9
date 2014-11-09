@@ -7,12 +7,15 @@ package package_test;
       end \
   end while(0)
   
-  class header_c;
+  class header_class;
+	
+  endclass
+  class data_class;
 	
   endclass
   virtual class	base_packet;
-	 rand header_c header;
-  	rand data_c	data;				
+	 rand header_class header;
+  	rand data_class	data;				
 	 static int	count;	//	Number	of	instance	created
   	int	id;	//	Unique	transaction	id
   	function new();
