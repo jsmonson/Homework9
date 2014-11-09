@@ -1,5 +1,5 @@
 TOPLEVEL=test
-VERILOG_FILES= package_test.sv factory_pkg.sv test_program.sv
+VERILOG_FILES= packet_pkg.sv scoreboard_pkg.sv package_test.sv factory_pkg.sv test_program.sv
 
 .PHONY: TestGood
 TestGood: factory
