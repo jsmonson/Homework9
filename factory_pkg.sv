@@ -1,6 +1,8 @@
-package factory_pkg;
 
-class component;
+package factory_pkg;
+   
+virtual class component;
+   pure virtual function void run_test();
 endclass // component
 
 virtual class wrapper;
