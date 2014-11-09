@@ -6,11 +6,24 @@ package package_test;
           `__FILE__, `__LINE__, `"r`"); \
       end \
   end while(0)
-  class base_packet;
-    base_packet p;
-    function 	base_packet	copy();
-      return p;
-    endfunction
+  
+  class header_c;
+	
+  endclass
+  virtual class	base_packet;
+	 rand header_c header;
+  	rand data_c	data;				
+	 static int	count;	//	Number	of	instance	created
+  	int	id;	//	Unique	transaction	id
+  	function new();
+	 	id	=	count++;	//	Give	each	object	a	unique	ID
+	 	header	=	new();
+		data	=	new();
+	 endfunction	//	new
+						
+	 pure virtual	function	base_packet	copy();
+	 pure virtual	function	void display();
+	 pure virtual	function	void calc_header_checksum();
   endclass
   
   class Driver;
