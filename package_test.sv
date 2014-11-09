@@ -12,18 +12,40 @@ package package_test;
       return p;
     endfunction
   endclass
-  
+
+  virtual class Driver_cbs;
+     virtual task pre_tx(ref base_packet pkt);
+	//Callback does nothing
+     endtask // pre_tx
+
+     virtual task post_tx(ref base_packet pkt);
+	//Callback does nothing
+     endtask // post_tx
+  endclass // Driver_cbs
+   
+   
   class Driver;
     mailbox #(base_packet) gen2drv;
     base_packet p;
+    Driver_cbs cbs[$];
+     
     function new(input mailbox #(base_packet) gen2drv);
         this.gen2drv = gen2drv;
-    endfunction
+    endfunction // new
+     
     task run(input int count);
-      repeat(count) begin
-        gen2drv.get(p);
-      end
+       repeat(count) begin
+          gen2drv.get(p);
+	  foreach cbs[i] cbs[i].pre_tx(p);
+	  transmit(p);
+	  foreach cbs[i] cbs[i].post_tx(p);
+       end
+    endtask // run
+
+    task transmit(base_packet pkt);
+       //Call the Checking Function From the Score Board
     endtask
+   
   endclass
   
   class Generator;
