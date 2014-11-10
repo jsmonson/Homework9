@@ -12,7 +12,7 @@ class header_class;
   rand bit[12:0] fragment_offset;
   rand bit[7:0] time_to_live;
   rand bit[7:0] protocol;
-  rand bit[15:0] header_checksum;
+  bit[15:0] header_checksum;
   rand bit[31:0] destination_ip_address;
   rand bit[31:0] source_ip_address;
   constraint flag_c {

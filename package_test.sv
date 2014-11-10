@@ -53,10 +53,11 @@ package package_test;
     task run(input int count);
         repeat(count) begin
             `SV_RAND_CHECK(blueprint.randomize());
+            blueprint.calc_header_checksum();
             gen2drv.put(blueprint.copy()); // requires base_packet class copy to have been implemented by a child class or will not compile!
         end
-  endtask
-endclass
+    endtask
+  endclass
 
   class Environment;
     Generator gen;
@@ -77,10 +78,8 @@ endclass
           gen.run(count);
           drv.run(count);
         join
-       // $display("%0t:Test Finished with %d errors.",$time, error_count);
+        $display("%0t:Test Finished with %d errors.",$time, error_count);
      endtask 
   endclass
 
-  
-  
 endpackage

@@ -4,6 +4,9 @@ class TestGood extends component;
       
    virtual function void run_test();
       $display("Running Good Test:");
+	  env = new(1000);
+	  env.build();
+	  env.run();
    endfunction // run_test
    
 endclass // TestGood
