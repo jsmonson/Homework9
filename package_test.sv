@@ -97,7 +97,7 @@ package package_test;
           gen.run(count);
           drv.run(count);
         join
-        $display("%0t:Test Finished with %d errors.",$time, drv.cbs.);
+        $display("%0t:Test Finished with %d comparisons.",$time, scb.num_compared);
      endtask 
   endclass
 
