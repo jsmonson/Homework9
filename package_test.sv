@@ -9,20 +9,31 @@ package package_test;
   
 
   virtual class Driver_cbs;
-     Scoreboard scb;
-     function new();
-        scb = new();
-     endfunction
+
      virtual task pre_tx(ref base_packet pkt);
 	     //Callback does nothing
      endtask // pre_tx
 
      virtual task post_tx(ref base_packet pkt);
-	     scb.compare_expected(pkt);
+     
      endtask // post_tx
   endclass // Driver_cbs
+  
+  class Driver_cbs_scoreboard extends Driver_cbs;
+    Scoreboard scb;
+    function new(input Scoreboard scb);
+      this.scb = scb;
+    endfunction
+    virtual task post_tx(ref base_packet pkt);
+      scb.compare_expected(pkt);
+    endtask // post_tx
+  endclass 
    
-   
+  class Driver_cbs_v3 extends Driver_cbs;
+    virtual task pre_tx(ref base_packet pkt);
+      pkt.version = $urandom_range(0,999) < 10 ? 3 : 4; // 1% of packets have version 3
+    endtask
+  endclass 
   class Driver;
     mailbox #(base_packet) gen2drv;
 
@@ -43,6 +54,7 @@ package package_test;
     endtask // run
 
     task transmit(base_packet pkt);
+       
        wait 10 ns;
     endtask
    
@@ -67,6 +79,7 @@ package package_test;
   class Environment;
     Generator gen;
     Driver drv;
+    Scoreboard scb;
     mailbox #(base_packet) gen2drv;
     int count;
     function new(int count);
@@ -76,6 +89,7 @@ package package_test;
       gen2drv = new();
       gen = new(gen2drv);
       drv = new(gen2drv);
+      scb = new();
     endfunction
   
     task run();
@@ -83,7 +97,7 @@ package package_test;
           gen.run(count);
           drv.run(count);
         join
-        $display("%0t:Test Finished with %d errors.",$time, error_count);
+        $display("%0t:Test Finished with %d errors.",$time, drv.cbs.);
      endtask 
   endclass
 
