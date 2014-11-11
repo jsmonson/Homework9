@@ -14,6 +14,7 @@ class TestGood extends component;
       end
       env.run();
       $display("%0t:Test Finished with %d comparisons.",$time, sb_callback.scb.num_compared);
+	  $stop;
    endtask // run_test
    
 endclass // TestGood
