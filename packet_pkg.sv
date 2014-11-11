@@ -82,7 +82,7 @@ class packet extends base_packet;
   function new();
     super.new();
   endfunction
-  function base_packet copy();
+  function packet copy();
     copy = new();
     copy.header = header.copy();
     copy.data = data.copy();

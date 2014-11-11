@@ -2,7 +2,7 @@
 package factory_pkg;
    
 virtual class component;
-   pure virtual function void run_test();
+   pure virtual task run_test();
 endclass // component
 
 virtual class wrapper;
